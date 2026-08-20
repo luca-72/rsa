@@ -1,10 +1,14 @@
 #include<iostream>
+#include<ctime>
+#include<random>
 using namespace std;
 
 const int BASE = 1e8;
 const int NN = 100, NNN = 100;
 
 typedef long long NrMare[NNN];
+
+
 
 void AtribMic(NrMare x, int n)
 {
@@ -349,6 +353,25 @@ void divideMare(NrMare A, NrMare B, NrMare Q, NrMare R){
 
  }
 
+ long long getRandomIntNumber(){
+
+   std::mt19937 mt_rand(std::random_device{}());
+
+  long long value = mt_rand();  // Call the generator
+
+  return value;
+
+}
+
+void getRandomNrMare(NrMare n, int len){
+
+  n[0] = len;
+
+  for(int i=1;i<=n[0];i++)
+    n[i] = getRandomIntNumber() % BASE;
+
+}
+
  
 void euclid(NrMare a, NrMare b, NrMare x, NrMare y, NrMare MOD){
 
@@ -416,11 +439,9 @@ void invers_modular(NrMare A, NrMare MOD, NrMare rez){
 
 int randomBaseDigit(){
 
-  // TO DO
-
   // returns a random digit in base BASE;
 
-  return rand() % BASE;
+  return getRandomIntNumber() % BASE;
 
 }
 
@@ -440,11 +461,19 @@ void randomCandidate(NrMare p, int bits){
 
 void randomNumber(NrMare a, NrMare n){
 
-  // TO DO
-
   // generates a random number between 2 and n-2; answer in a
 
-  AtribMic(a, 124);
+  NrMare q, r;
+
+  NrMare doi; AtribMic(doi, 2);
+  NrMare patru; AtribMic(patru, 4);
+
+  NrMare n4; AtribMare(n4, n); Scadere(n4, patru);
+
+  getRandomNrMare(a, 1); // 1 digit
+  divideMare(a, n4, q, r);
+  AtribMare(a, r);
+  Adunare(a, doi);
 
 }
 
@@ -537,6 +566,8 @@ void randomPrime1024(NrMare n){
 
 void test(){
 
+  cout << getRandomIntNumber() << "\n\n";
+
   NrMare a;
 
   randomPrime1024(a);
@@ -565,30 +596,45 @@ int main(){
 
     NrMare message; AtribMic(message, 111);
 
-    NrMare p; randomPrime1024(p); // AtribMic(p, 53);
-    NrMare q; randomPrime1024(q);// AtribMic(q, 73);
-    NrMare N; AtribMare(N, p); ProdusMare(N,q);
-
-    cout << "N = "; Afis(N);
+    NrMare phi22, e2, q, r, aux;
 
     NrMare doi; AtribMic(doi, 2);
     NrMare unu; AtribMic(unu, 1);
+    NrMare zero; AtribMic(zero, 0);
 
-    NrMare aux;
+    NrMare p, N, p1, q1, p2, phi;
 
-    cout << "unu = ";Afis(unu);
+    while(true){
 
-    cout << "p = "; Afis(p);
+      randomPrime1024(p); // AtribMic(p, 53);
+      randomPrime1024(q);// AtribMic(q, 73);
+      AtribMare(N, p); ProdusMare(N,q);
+
+      cout << "N = "; Afis(N);
+
+      cout << "unu = ";Afis(unu);
+
+      cout << "p = "; Afis(p);
 
 
 
-    NrMare p1; AtribMare(p1, p);cout << "p1 = "; Afis(p1); Scadere(p1, unu);
-    NrMare q1; AtribMare(q1, q); Scadere(q1, unu);
-    NrMare p2; AtribMare(p2, p); Scadere(p2, doi);
+      AtribMare(p1, p);cout << "p1 = "; Afis(p1); Scadere(p1, unu);
+      AtribMare(q1, q); Scadere(q1, unu);
+      AtribMare(p2, p); Scadere(p2, doi);
 
-    cout << "p1 = "; Afis(p1);
+      cout << "p1 = "; Afis(p1);
 
-    NrMare phi; AtribMare(phi, p1); cout << "phi = "; Afis(phi); ProdusMare(phi, q1);
+      AtribMare(phi, p1); cout << "phi = "; Afis(phi); ProdusMare(phi, q1);
+
+      AtribMare(phi22, phi);
+      AtribMare(e2, e);
+
+      divideMare(phi22, e2, q, r);
+
+      if(Compara(r,zero) != 0)
+        break;
+
+    }
     cout << "phi = "; Afis(phi);
 
     NrMare phi2; AtribMare(phi2, phi); Scadere(phi2, doi);
