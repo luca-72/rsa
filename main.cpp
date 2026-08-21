@@ -557,44 +557,187 @@ bool isPrime(NrMare n, int k){
 
 void randomPrime1024(NrMare n){
 
-  randomCandidate(n, 8);
+  randomCandidate(n, 32);
 
   while(!isPrime(n, 10)){
-    randomCandidate(n, 8);
+    randomCandidate(n, 32);
   }
+}
+
+
+
+string string_to_string10(string s){
+
+  int i, lg1, lg2=0, nr, lgnr, j;
+  string rez, aux;
+
+  lg1 = s.size();
+
+  for(i=0;i<lg1;i++){
+
+    nr = int(s[i]); // 97
+
+    lgnr = 0;
+    aux.clear();
+
+    while(nr){
+      lgnr++;
+      aux.push_back(char(nr%10+'0')); // 79
+      nr/=10;
+    }
+
+    rez.push_back(char(lgnr+'0'));
+    for(j=aux.size()-1;j>=0;j--)
+      rez.push_back(aux[j]);
+
+  }
+
+  return rez;
+
+}
+
+void string10_to_NrMare(NrMare rez, string s){
+
+  AtribMic(rez, 0);
+  rez[0] = 0;
+
+  int i, lg = s.size(), j, aux;
+
+  for(i=lg-1;i>=0;i-=8){
+
+    aux = 0;
+
+   for(j=i-7;j<=i;j++){
+
+    if(j >= 0)
+      aux = aux * 10 + (s[j] - '0');
+
+   }
+
+   rez[++rez[0]] = aux;
+
+  }
+
+}
+
+string NrMare_to_string10(NrMare a){
+
+  int i, j;
+  string rez, aux;
+  NrMare aa;
+
+  AtribMare(aa, a);
+
+  for(i=a[0];i>0;i--){
+
+    aux.clear();
+
+    //cout << "*" << a[i] << endl;
+
+    while(a[i]){
+      //cout << "c:" << a[i] << " " << char(a[i] + '0') << endl;
+      aux.push_back(char(a[i] % 10 + '0'));
+      a[i] /= 10;
+    }
+
+    for(j=aux.size()-1;j>=0;j--)
+      rez.push_back(aux[j]);
+
+  }
+
+  AtribMare(a, aa);
+
+  return rez;
+
+}
+
+string string10_to_string(string s){
+
+  string rez;
+  int i, lg=s.size(), j, aux, len;
+
+  for(i=0;i<lg;i++){
+
+    aux=0;
+    len = s[i] - '0';
+
+    for(j=i+1;j<=i+len;j++){
+      aux = aux*10 + (s[j] - '0');
+    }
+
+    //cout << aux << "\n";
+
+    i = j-1;
+
+    rez.push_back(char(aux));
+
+  }
+
+  return rez;
+
 }
 
 void test(){
 
-  cout << getRandomIntNumber() << "\n\n";
+  string s;
+  NrMare n;
+  cin >> s;
 
-  NrMare a;
+  cout << "initial string : " << s << "\n";
 
-  randomPrime1024(a);
-  Afis(a);
+  s = string_to_string10(s);
+  cout << "string10 : " << s << "\n";
+
+  string10_to_NrMare(n, s);
+  cout << "NrMare : ";
+  Afis(n);
+
+  s = NrMare_to_string10(n);
+  cout << "string10 : " << s << "\n";
+
+  s = string10_to_string(s);
+  cout <<  "string : " << s << "\n";
+
+}
 
 
-  for(int i=10;i<=20;i++){
-    AtribMic(a, i);
-    //cout << Par(a) << "  ";
-    if(isPrime(a, 10))
-      cout << i << " ";
-  }
 
-  cout << "\n\n";
+void read(NrMare message){
+
+  string s;
+
+  cin >> s;
+
+  s = string_to_string10(s);
+  string10_to_NrMare(message, s);
+
+}
+
+void write(NrMare a){
+
+  string s;
+
+  s = NrMare_to_string10(a);
+  s = string10_to_string(s);
+
+  cout << s << "\n";
 
 }
 
 int main(){
 
-  test();
+  //test();
 
   //return 0;
 
 
-    NrMare e; AtribMic(e, 65537); // TO DO : choose e such that it is coprime with phi
+    NrMare e; AtribMic(e, 65537); 
 
-    NrMare message; AtribMic(message, 111);
+    NrMare message;
+
+    read(message);
+
+    //AtribMic(message, 12345678);
 
     NrMare phi22, e2, q, r, aux;
 
@@ -615,6 +758,8 @@ int main(){
       cout << "unu = ";Afis(unu);
 
       cout << "p = "; Afis(p);
+
+      cout << "q = "; Afis(q);
 
 
 
@@ -645,7 +790,7 @@ int main(){
     
     invers_modular(d, phi, aux); AtribMare(d, aux); //Expo(d, phi2,phi);
 
-    
+    cout << "d = "; Afis(d);
 
     NrMare ct; AtribMare(ct, message);
     Expo(ct, e, N);
@@ -657,37 +802,6 @@ int main(){
     NrMare pt; AtribMare(pt, ct);
     Expo(pt, d, N);
 
-    cout << "decriptat : "; Afis(pt);
-
-    
-
-    
-
-    /*
-    NrMare d; AtribMare(d, e); Expo(d, phi-2);
-
-    Afis(N);
-    Afis(phi);
-    Afis(doi);
-    Expo(N, doi);
-    Afis(N);
-
-    
-
-    NrMare A, B, Q, R;
-
-    AtribMic(A, 61);
-    AtribMic(B, 7);
-
-    //divideMare(A, B, Q, R);
-
-    Afis(A);
-    Afis(B);
-    Afis(phi);
-    Expo(A,B,phi);
-    Afis(A);
-    //Afis(R);
-
-    */
+    cout << "decriptat : "; write(pt); //Afis(pt);
 
 }
