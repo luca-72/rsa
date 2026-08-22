@@ -99,47 +99,6 @@ void ProdusMic(NrMare x, int n)
     x[++x[0]]=t%BASE;
 }
 
-/*
-
-void ProdusMare(NrMare x, NrMare y)
-//x = x * y
-{
-  int i,j;
-  long long t=0;
-  NrMare z, zz[NN+1], aux;
-  //stabilim lungimea rezultatului. S-ar putea modifica
-  z[0]=x[0]+y[0]-1;
-  //initializez vectorul z
-  for(i=1;i<=x[0]+y[0];i++) 
-    z[i]=0;
-  //calculez produsele intermediare, impreuna cu suma intermediara
-  for(i=1;i<=x[0];i++){
-    for(j=1;j<=y[0];j++)
-      z[i+j-1]+=1ll*x[i]*y[j];
-
-   
-    for(int ii=2;ii<=z[0];ii++){
-      z[ii] += z[ii-1];
-      z[ii-1] %= BASE;
-    }
-    z[z[0]] %= BASE;
-  }
-  //corectez sumele intermediare
-  for(i=1;i<=z[0];i++)
-  {
-    t+=z[i];
-    z[i]=t%BASE;
-    t/=BASE;
-  }
-  if(t)
-    z[++z[0]]=t;
-  // pun rezultatul in x
-  for(i=0;i<=z[0];i++)
-    x[i]=z[i];
-}
-
-*/
-
 int Divide(NrMare x, int n)
 //x = x /n, returneaza x%n
 {
@@ -156,53 +115,6 @@ int Divide(NrMare x, int n)
   return r;
 }
 
-/*
-void ProdusMare(NrMare x, NrMare y)
-//x = x * y
-{
-  int i,j;
-  long long t=0;
-  NrMare z, zz[2*NN+1], aux, tt;
-  NrMare zero; AtribMic(zero, 0);
-
-  for(i=0;i<=x[0]+y[0];i++)
-   AtribMic(zz[i], 0);
-
-  //stabilim lungimea rezultatului. S-ar putea modifica
-  z[0]=x[0]+y[0];
-  //initializez vectorul z
-  for(i=1;i<=x[0]+y[0];i++) 
-    z[i]=0;
-  //calculez produsele intermediare, impreuna cu suma intermediara
-  for(i=1;i<=x[0];i++){
-    for(j=1;j<=y[0];j++){
-      AtribMic(aux, x[i]);
-      ProdusMic(aux, y[j]);
-      Adunare(zz[i+j-1], aux);
-      //z[i+j-1]+=1ll*x[i]*y[j];
-
-    }
-
-  }
-  //corectez sumele intermediare
-  AtribMic(tt, 0);
-  NrMare Q, R;
-  for(i=1;i<=z[0];i++)
-  {
-    Adunare(tt,zz[i]);
-    z[i] = Divide(tt, BASE);
-  }
-  if(Compara(tt, zero) == 1)
-    z[++z[0]]=Divide(tt, BASE);
-
-  while(z[0] > 1 && z[z[0]] == 0)
-   z[0]--;
-
-  // pun rezultatul in x
-  for(i=0;i<=z[0];i++)
-    x[i]=z[i];
-}
-*/
 
 void ProdusMare(NrMare x, NrMare y)
 {
@@ -240,12 +152,12 @@ void ProdusMare(NrMare x, NrMare y)
 
 void Afis(NrMare A){
 
-  cout << A[A[0]];
+  //cout << A[A[0]];
 
     for(int i = A[0]-1;i>0;i--)
         printf("%08lld", A[i]);
 
-    cout << '\n';
+    //cout << '\n';
 
 }
 
@@ -375,8 +287,8 @@ void getRandomNrMare(NrMare n, int len){
  
 void euclid(NrMare a, NrMare b, NrMare x, NrMare y, NrMare MOD){
 
-  cout << "a = "; Afis(a);
-  cout << "b = "; Afis(b);
+  //cout << "a = "; Afis(a);
+  //cout << "b = "; Afis(b);
 
   NrMare x0, y0,Q, R, aux;
 
@@ -384,7 +296,7 @@ void euclid(NrMare a, NrMare b, NrMare x, NrMare y, NrMare MOD){
 
   for(int k = 0; k < NNN; k++) { x0[k] = y0[k] = Q[k] = R[k] = aux[k] = 0; }
 
-  printf("%lld\n", b[0]); // whatever represents the number of digits
+  //printf("%lld\n", b[0]); // whatever represents the number of digits
 
   if(Compara(b,zero) == 0){
     AtribMic(x,1);
@@ -555,12 +467,12 @@ bool isPrime(NrMare n, int k){
 
 }
 
-void randomPrime1024(NrMare n){
+void randomPrime64(NrMare n){
 
-  randomCandidate(n, 32);
+  randomCandidate(n, 64);
 
   while(!isPrime(n, 10)){
-    randomCandidate(n, 32);
+    randomCandidate(n, 64);
   }
 }
 
@@ -575,7 +487,7 @@ string string_to_string10(string s){
 
   for(i=0;i<lg1;i++){
 
-    nr = int(s[i]); // 97
+    nr = int((unsigned char)s[i]); // 97
 
     lgnr = 0;
     aux.clear();
@@ -628,21 +540,18 @@ string NrMare_to_string10(NrMare a){
 
   AtribMare(aa, a);
 
-  for(i=a[0];i>0;i--){
-
+   for(i=a[0];i>0;i--){
     aux.clear();
-
-    //cout << "*" << a[i] << endl;
-
     while(a[i]){
-      //cout << "c:" << a[i] << " " << char(a[i] + '0') << endl;
-      aux.push_back(char(a[i] % 10 + '0'));
-      a[i] /= 10;
+      aux.push_back(char(a[i] % 10 + '0')); a[i] /= 10; 
     }
 
-    for(j=aux.size()-1;j>=0;j--)
-      rez.push_back(aux[j]);
+    if(i != a[0])                   // every limb except the top one...
+      while(aux.size() < 8) 
+        aux.push_back('0');         // must be exactly 8 digits
 
+    for(j=aux.size()-1;j>=0;j--) 
+      rez.push_back(aux[j]);
   }
 
   AtribMare(a, aa);
@@ -683,30 +592,26 @@ void test(){
   NrMare n;
   cin >> s;
 
-  cout << "initial string : " << s << "\n";
+  //cout << "initial string : " << s << "\n";
 
   s = string_to_string10(s);
-  cout << "string10 : " << s << "\n";
+  //cout << "string10 : " << s << "\n";
 
   string10_to_NrMare(n, s);
-  cout << "NrMare : ";
-  Afis(n);
+  //cout << "NrMare : ";
+  //Afis(n);
 
   s = NrMare_to_string10(n);
-  cout << "string10 : " << s << "\n";
+  //cout << "string10 : " << s << "\n";
 
   s = string10_to_string(s);
-  cout <<  "string : " << s << "\n";
+  //cout <<  "string : " << s << "\n";
 
 }
 
 
 
-void read(NrMare message){
-
-  string s;
-
-  cin >> s;
+void read(NrMare message, string s){
 
   s = string_to_string10(s);
   string10_to_NrMare(message, s);
@@ -720,23 +625,16 @@ void write(NrMare a){
   s = NrMare_to_string10(a);
   s = string10_to_string(s);
 
-  cout << s << "\n";
+  cout << s;
 
 }
 
-int main(){
+NrMare p, N, p1, q1, p2, phi, phi2, d, e;
 
-  //test();
+void setup(){
 
-  //return 0;
-
-
-    NrMare e; AtribMic(e, 65537); 
-
-    NrMare message;
-
-    read(message);
-
+    AtribMic(e, 65537); 
+    
     //AtribMic(message, 12345678);
 
     NrMare phi22, e2, q, r, aux;
@@ -745,31 +643,31 @@ int main(){
     NrMare unu; AtribMic(unu, 1);
     NrMare zero; AtribMic(zero, 0);
 
-    NrMare p, N, p1, q1, p2, phi;
+   
 
     while(true){
 
-      randomPrime1024(p); // AtribMic(p, 53);
-      randomPrime1024(q);// AtribMic(q, 73);
+      randomPrime64(p); // AtribMic(p, 53);
+      randomPrime64(q);// AtribMic(q, 73);
       AtribMare(N, p); ProdusMare(N,q);
 
-      cout << "N = "; Afis(N);
+      //cout << "N = "; Afis(N);
 
-      cout << "unu = ";Afis(unu);
+      //cout << "unu = ";Afis(unu);
 
-      cout << "p = "; Afis(p);
+      //cout << "p = "; Afis(p);
 
-      cout << "q = "; Afis(q);
+      //cout << "q = "; Afis(q);
 
 
 
-      AtribMare(p1, p);cout << "p1 = "; Afis(p1); Scadere(p1, unu);
+      AtribMare(p1, p); Scadere(p1, unu);
       AtribMare(q1, q); Scadere(q1, unu);
       AtribMare(p2, p); Scadere(p2, doi);
 
-      cout << "p1 = "; Afis(p1);
+      //cout << "p1 = "; Afis(p1);
 
-      AtribMare(phi, p1); cout << "phi = "; Afis(phi); ProdusMare(phi, q1);
+      AtribMare(phi, p1);  ProdusMare(phi, q1);
 
       AtribMare(phi22, phi);
       AtribMare(e2, e);
@@ -780,28 +678,113 @@ int main(){
         break;
 
     }
-    cout << "phi = "; Afis(phi);
+    //cout << "phi = "; Afis(phi);
 
-    NrMare phi2; AtribMare(phi2, phi); Scadere(phi2, doi);
+    AtribMare(phi2, phi); Scadere(phi2, doi);
 
-    NrMare d; AtribMare(d, e);
-    cout << "phi = "; Afis(phi);
+    AtribMare(d, e);
+    //cout << "phi = "; Afis(phi);
 
     
     invers_modular(d, phi, aux); AtribMare(d, aux); //Expo(d, phi2,phi);
 
-    cout << "d = "; Afis(d);
+    //cout << "d = "; Afis(d);
 
-    NrMare ct; AtribMare(ct, message);
-    Expo(ct, e, N);
+}
 
-    cout << "criptat : "; Afis(ct);
+void encrypt(NrMare ct, string s){
 
-    //return 0;
+  NrMare message;
 
-    NrMare pt; AtribMare(pt, ct);
-    Expo(pt, d, N);
+  read(message, s);
 
-    cout << "decriptat : "; write(pt); //Afis(pt);
+  AtribMare(ct, message);
+  Expo(ct, e, N);
 
+  //cout << "criptat : "; Afis(ct);
+
+}
+
+void decrypt(NrMare pt, NrMare ct){
+
+  AtribMare(pt, ct);
+  Expo(pt, d, N);
+
+  //cout << "decriptat : "; write(pt); //Afis(pt);
+
+}
+
+int main(){
+
+  NrMare pt, ct;
+  setup();
+  string s;
+  while(true){
+    cout << "enter the message : "; getline(cin, s);
+
+    if(s.size() < 4000)
+      break;
+
+    cout << "the message can't be longer than 4000 characters. try again\n";
+
+  }
+
+  cout << "\n\n";
+
+  vector<string> vmes;
+  string aux;
+  int i, j, lg;
+
+  lg = s.size();
+
+  for(i=0;i<lg;i++){
+
+    aux.clear();
+
+    for(j=i;j<i+4&&j<lg;j++){
+
+      aux.push_back(s[j]);
+
+    }
+
+    i = j-1;
+
+    vmes.push_back(aux);
+
+  }
+
+  
+  NrMare vct[1002], vpt[1002];
+  NrMare auxct, auxpt;
+  int lgvct=0, lgvpt=0;
+
+  for(auto ee : vmes){
+
+    encrypt(auxct, ee);
+
+    AtribMare(vct[++lgvct], auxct);
+    //vct.push_back(auxct);
+
+  }
+
+  
+
+  cout << "criptat : ";
+  for(i=1;i<=lgvct;i++){
+    Afis(vct[i]);
+  }
+  cout << endl;
+
+  for(i=1;i<=lgvct;i++){
+
+    decrypt(auxpt, vct[i]);
+    AtribMare(vpt[++lgvpt], auxpt);//vpt.push_back(auxpt);
+
+  }
+
+  cout << "decriptat : ";
+  for(i=1;i<=lgvpt;i++)
+    write(vpt[i]);
+  cout << endl;
+  
 }
