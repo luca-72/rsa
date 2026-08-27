@@ -1,83 +1,86 @@
 #include "bigint.h"
+
 #include "primality.h"
+
 #include "rsa.h"
 
 #include<iostream>
+
 #include<vector>
 
 using namespace std;
 
-int main(){
+int main() {
 
-    NrMare pt, ct;
-    setup();
-    string s;
-    while(true){
-        cout << "enter the message : "; getline(cin, s);
+   NrMare pt, ct;
+   setup();
+   string s;
+   while (true) {
 
-        if(s.size() < 4000)
-            break;
+      cout << "enter the message : ";
+      getline(cin, s);
 
-        cout << "the message can't be longer than 4000 characters. try again\n";
+      if (s.size() < 4000)
+         break;
 
-    }
+      cout << "the message can't be longer than 400 characters. try again\n";
 
-    cout << "\n\n";
+   }
 
-    vector<string> vmes;
-    string aux;
-    int i, j, lg;
+   cout << "\n";
 
-    lg = s.size();
+   vector < string > vmes;
+   string aux;
+   int i, j, lg;
 
-    for(i=0;i<lg;i++){
+   lg = s.size();
 
-        aux.clear();
+   for (i = 0; i < lg; i++) {
 
-        for(j=i;j<i+4&&j<lg;j++){
+      aux.clear();
 
-            aux.push_back(s[j]);
+      for (j = i; j < i + 4 && j < lg; j++) {
 
-        }
+         aux.push_back(s[j]);
 
-        i = j-1;
+      }
 
-        vmes.push_back(aux);
+      i = j - 1;
 
-    }
+      vmes.push_back(aux);
 
+   }
 
-    NrMare vct[1002], vpt[1002];
-    NrMare auxct, auxpt;
-    int lgvct=0, lgvpt=0;
+   NrMare vct[1002], vpt[1002];
+   NrMare auxct, auxpt;
+   int lgvct = 0, lgvpt = 0;
 
-    for(auto ee : vmes){
+   for (auto ee: vmes) {
 
-        encrypt(auxct, ee);
+      encrypt(auxct, ee);
 
-        AtribMare(vct[++lgvct], auxct);
-        //vct.push_back(auxct);
+      AtribMare(vct[++lgvct], auxct);
 
-    }
+   }
 
+   cout << "encrypted message : ";
+   for (i = 1; i <= lgvct; i++) {
+      Afis(vct[i]);
+   }
+   cout << endl;
 
+   display();
 
-    cout << "criptat : ";
-    for(i=1;i<=lgvct;i++){
-        Afis(vct[i]);
-    }
-    cout << endl;
+   for (i = 1; i <= lgvct; i++) {
 
-    for(i=1;i<=lgvct;i++){
+      decrypt(auxpt, vct[i]);
+      AtribMare(vpt[++lgvpt], auxpt); 
 
-        decrypt(auxpt, vct[i]);
-        AtribMare(vpt[++lgvpt], auxpt);//vpt.push_back(auxpt);
+   }
 
-    }
-
-    cout << "decriptat : ";
-    for(i=1;i<=lgvpt;i++)
-        write(vpt[i]);
-    cout << endl;
+   cout << "decrypted message : ";
+   for (i = 1; i <= lgvpt; i++)
+      write(vpt[i]);
+   cout << "\n\n";
 
 }

@@ -1,145 +1,151 @@
-
 #include "primality.h"
 
 #include<random>
+
 #include<ctime>
 
 using namespace std;
 
-std::mt19937 mt_rand(std::random_device{}());
+std::mt19937 mt_rand(std::random_device {}());
 
-long long getRandomIntNumber(){
+long long getRandomIntNumber() {
 
-    long long value = mt_rand();  // Call the generator
+   long long value = mt_rand();
 
-    return value;
-
-}
-
-void getRandomNrMare(NrMare n, int len){
-
-    n[0] = len;
-
-    for(int i=1;i<=n[0];i++)
-        n[i] = getRandomIntNumber() % BASE;
+   return value;
 
 }
 
-int randomBaseDigit(){
+void getRandomNrMare(NrMare n, int len) {
 
-    // returns a random digit in base BASE;
+   n[0] = len;
 
-    return getRandomIntNumber() % BASE;
-
-}
-
-void randomCandidate(NrMare p, int bits){
-
-    int limbs = (bits+26) / 27;
-
-    p[0] = limbs;
-    for(int i=1;i<=limbs;i++){
-        p[i] = randomBaseDigit();
-    }
-
-    p[1] |= 1;
+   for (int i = 1; i <= n[0]; i++)
+      n[i] = getRandomIntNumber() % BASE;
 
 }
 
+int randomBaseDigit() {
 
-void randomNumber(NrMare a, NrMare n){
+   // returns a random digit in base BASE;
 
-    // generates a random number between 2 and n-2; answer in a
-
-    NrMare q, r;
-
-    NrMare doi; AtribMic(doi, 2);
-    NrMare patru; AtribMic(patru, 4);
-
-    NrMare n4; AtribMare(n4, n); Scadere(n4, patru);
-
-    getRandomNrMare(a, 1); // 1 digit
-    divideMare(a, n4, q, r);
-    AtribMare(a, r);
-    Adunare(a, doi);
+   return getRandomIntNumber() % BASE;
 
 }
 
-bool MillerTest(NrMare d, NrMare n)
-{
-    NrMare dd;
-    AtribMare(dd, d);
+void randomCandidate(NrMare p, int bits) {
 
-    NrMare a;
-    randomNumber(a, n);
+   int limbs = (bits + 26) / 27;
 
-    NrMare x;
-    AtribMare(x, a);
-    Expo(x, dd, n);
+   p[0] = limbs;
+   for (int i = 1; i <= limbs; i++) {
+      p[i] = randomBaseDigit();
+   }
 
-    NrMare unu;
-    AtribMic(unu, 1);
-
-    NrMare doi;
-    AtribMic(doi, 2);
-
-    NrMare n1;
-    AtribMare(n1, n);
-    Scadere(n1, unu);
-
-    if(Compara(x, unu) == 0 ||
-        Compara(x, n1) == 0)
-        return true;
-
-    while(Compara(dd, n1) != 0)
-    {
-        Expo(x, doi, n);
-
-        ProdusMic(dd, 2);
-
-        if(Compara(x, unu) == 0)
-            return false;
-
-        if(Compara(x, n1) == 0)
-            return true;
-    }
-
-    return false;
-}
-
-bool Par(NrMare n){
-
-
-    NrMare nn; AtribMare(nn, n);
-
-    if(Divide(nn,2) == 0)
-        return true;
-    return false;
+   p[1] |= 1;
 
 }
 
-bool isPrime(NrMare n, int k){
+void randomNumber(NrMare a, NrMare n) {
 
-    NrMare unu; AtribMic(unu, 1);
-    NrMare trei; AtribMic(trei, 3);
-    NrMare patru; AtribMic(patru, 4);
+   // generates a random number between 2 and n-2; answer stored a
 
-    if(Compara(n,unu) < 1 || Compara(n, patru) == 0)
-        return false;
-    if(Compara(n, trei) < 1)
-        return true;
+   NrMare q, r;
 
-    NrMare d; AtribMare(d, n); Scadere(d, unu);
+   NrMare doi;
+   AtribMic(doi, 2);
+   NrMare patru;
+   AtribMic(patru, 4);
 
-    while(Par(d))
-        Divide(d, 2);
+   NrMare n4;
+   AtribMare(n4, n);
+   Scadere(n4, patru);
 
-    for(int i=0; i<k;i++){
-        if(!MillerTest(d, n))
-            return false;
-    }
+   getRandomNrMare(a, 3);
+   divideMare(a, n4, q, r);
+   AtribMare(a, r);
+   Adunare(a, doi);
 
-    return true;
+}
+
+bool MillerTest(NrMare d, NrMare n) {
+   NrMare dd;
+   AtribMare(dd, d);
+
+   NrMare a;
+   randomNumber(a, n);
+
+   NrMare x;
+   AtribMare(x, a);
+   Expo(x, dd, n);
+
+   NrMare unu;
+   AtribMic(unu, 1);
+
+   NrMare doi;
+   AtribMic(doi, 2);
+
+   NrMare n1;
+   AtribMare(n1, n);
+   Scadere(n1, unu);
+
+   if (Compara(x, unu) == 0 ||
+      Compara(x, n1) == 0)
+      return true;
+
+   while (Compara(dd, n1) != 0) {
+      Expo(x, doi, n);
+
+      ProdusMic(dd, 2);
+
+      if (Compara(x, unu) == 0)
+         return false;
+
+      if (Compara(x, n1) == 0)
+         return true;
+   }
+
+   return false;
+}
+
+bool Par(NrMare n) {
+
+   NrMare nn;
+   AtribMare(nn, n);
+
+   if (Divide(nn, 2) == 0)
+      return true;
+   return false;
+
+}
+
+bool isPrime(NrMare n, int k) {
+
+   NrMare unu;
+   AtribMic(unu, 1);
+   NrMare trei;
+   AtribMic(trei, 3);
+   NrMare patru;
+   AtribMic(patru, 4);
+
+   if (Compara(n, unu) < 1 || Compara(n, patru) == 0)
+      return false;
+   if (Compara(n, trei) < 1)
+      return true;
+
+   NrMare d;
+   AtribMare(d, n);
+   Scadere(d, unu);
+
+   while (Par(d))
+      Divide(d, 2);
+
+   for (int i = 0; i < k; i++) {
+      if (!MillerTest(d, n))
+         return false;
+   }
+
+   return true;
 
 }
 

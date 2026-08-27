@@ -12,3 +12,4 @@ void write(NrMare a);
 void setup();
 void encrypt(NrMare ct, std::string s);
 void decrypt(NrMare pt, NrMare ct);
+void display();
