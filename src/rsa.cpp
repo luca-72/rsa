@@ -14,7 +14,7 @@
 
 using namespace std;
 
-string string_to_string10(string s) {
+string stringToString10(string s) {
 
    int i, lg1, lg2 = 0, nr, lgnr, j;
    string rez, aux;
@@ -44,9 +44,9 @@ string string_to_string10(string s) {
 
 }
 
-void string10_to_NrMare(NrMare rez, string s) {
+void string10ToBigInt(NrMare rez, string s) {
 
-   AtribMic(rez, 0);
+   smallAssign(rez, 0);
    rez[0] = 0;
 
    int i, lg = s.size(), j, aux;
@@ -68,13 +68,13 @@ void string10_to_NrMare(NrMare rez, string s) {
 
 }
 
-string NrMare_to_string10(NrMare a) {
+string BigIntToString10(NrMare a) {
 
    int i, j;
    string rez, aux;
    NrMare aa;
 
-   AtribMare(aa, a);
+   bigAssign(aa, a);
 
    for (i = a[0]; i > 0; i--) {
       aux.clear();
@@ -91,13 +91,13 @@ string NrMare_to_string10(NrMare a) {
          rez.push_back(aux[j]);
    }
 
-   AtribMare(a, aa);
+   bigAssign(a, aa);
 
    return rez;
 
 }
 
-string string10_to_string(string s) {
+string string10ToString(string s) {
 
    string rez;
    int i, lg = s.size(), j, aux, len;
@@ -123,8 +123,8 @@ string string10_to_string(string s) {
 
 void read(NrMare message, string s) {
 
-   s = string_to_string10(s);
-   string10_to_NrMare(message, s);
+   s = stringToString10(s);
+   string10ToBigInt(message, s);
 
 }
 
@@ -132,8 +132,8 @@ void write(NrMare a) {
 
    string s;
 
-   s = NrMare_to_string10(a);
-   s = string10_to_string(s);
+   s = BigIntToString10(a);
+   s = string10ToString(s);
 
    cout << s;
 
@@ -143,51 +143,51 @@ NrMare p, N, p1, q1, p2, phi, phi2, d, e;
 
 void setup() {
 
-   AtribMic(e, 65537);
+   smallAssign(e, 65537);
 
    NrMare phi22, e2, q, r, aux;
 
    NrMare doi;
-   AtribMic(doi, 2);
+   smallAssign(doi, 2);
    NrMare unu;
-   AtribMic(unu, 1);
+   smallAssign(unu, 1);
    NrMare zero;
-   AtribMic(zero, 0);
+   smallAssign(zero, 0);
 
    while (true) {
 
       randomPrime64(p); 
       randomPrime64(q); 
-      AtribMare(N, p);
-      ProdusMare(N, q);
+      bigAssign(N, p);
+      bigProduct(N, q);
 
-      AtribMare(p1, p);
-      Scadere(p1, unu);
-      AtribMare(q1, q);
-      Scadere(q1, unu);
-      AtribMare(p2, p);
-      Scadere(p2, doi);
+      bigAssign(p1, p);
+      substract(p1, unu);
+      bigAssign(q1, q);
+      substract(q1, unu);
+      bigAssign(p2, p);
+      substract(p2, doi);
 
-      AtribMare(phi, p1);
-      ProdusMare(phi, q1);
+      bigAssign(phi, p1);
+      bigProduct(phi, q1);
 
-      AtribMare(phi22, phi);
-      AtribMare(e2, e);
+      bigAssign(phi22, phi);
+      bigAssign(e2, e);
 
-      divideMare(phi22, e2, q, r);
+      bigDivide(phi22, e2, q, r);
 
-      if (Compara(r, zero) != 0)
+      if (compare(r, zero) != 0)
          break;
 
    }
 
-   AtribMare(phi2, phi);
-   Scadere(phi2, doi);
+   bigAssign(phi2, phi);
+   substract(phi2, doi);
 
-   AtribMare(d, e);
+   bigAssign(d, e);
 
-   invers_modular(d, phi, aux);
-   AtribMare(d, aux); 
+   modularInverse(d, phi, aux);
+   bigAssign(d, aux); 
 
 }
 
@@ -197,22 +197,22 @@ void encrypt(NrMare ct, string s) {
 
    read(message, s);
 
-   AtribMare(ct, message);
-   Expo(ct, e, N);
+   bigAssign(ct, message);
+   fastExponentiation(ct, e, N);
 
 }
 
 void decrypt(NrMare pt, NrMare ct) {
 
-   AtribMare(pt, ct);
-   Expo(pt, d, N);
+   bigAssign(pt, ct);
+   fastExponentiation(pt, d, N);
 
 }
 
 void display(){
 
-    cout << "public modulus N : "; Afis(N); cout << "\n";
-    cout << "Euler's totient of N : "; Afis(phi); cout << "\n";
-    cout << "public exponent : "; Afis(e); cout << "\n";
+    cout << "public modulus N : "; print(N); cout << "\n";
+    cout << "Euler's totient of N : "; print(phi); cout << "\n";
+    cout << "public exponent : "; print(e); cout << "\n";
 
 }

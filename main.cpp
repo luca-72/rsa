@@ -59,13 +59,13 @@ int main() {
 
       encrypt(auxct, ee);
 
-      AtribMare(vct[++lgvct], auxct);
+      bigAssign(vct[++lgvct], auxct);
 
    }
 
    cout << "encrypted message : ";
    for (i = 1; i <= lgvct; i++) {
-      Afis(vct[i]);
+      print(vct[i]);
    }
    cout << endl;
 
@@ -74,7 +74,7 @@ int main() {
    for (i = 1; i <= lgvct; i++) {
 
       decrypt(auxpt, vct[i]);
-      AtribMare(vpt[++lgvpt], auxpt); 
+      bigAssign(vpt[++lgvpt], auxpt); 
 
    }
 

@@ -10,7 +10,7 @@
 
 using namespace std;
 
-void AtribMic(NrMare x, int n) {
+void smallAssign(NrMare x, int n) {
    for (int i = 0; i < NN; i++)
       x[i] = 0;
 
@@ -25,7 +25,7 @@ void AtribMic(NrMare x, int n) {
    }
 }
 
-void AtribMare(NrMare dest, NrMare src) {
+void bigAssign(NrMare dest, NrMare src) {
    int i;
 
    for (i = 0; i <= src[0]; i++)
@@ -35,7 +35,7 @@ void AtribMare(NrMare dest, NrMare src) {
       dest[i] = src[i] = 0;
 }
 
-int Compara(NrMare x, NrMare y) {
+int compare(NrMare x, NrMare y) {
    int nx = x[0];
    int ny = y[0];
 
@@ -63,7 +63,7 @@ int Compara(NrMare x, NrMare y) {
    return 1;
 }
 
-void Adunare(NrMare x, NrMare y){
+void add(NrMare x, NrMare y){
    int n = max(x[0], y[0]);
    long long carry = 0;
 
@@ -79,7 +79,7 @@ void Adunare(NrMare x, NrMare y){
       x[++x[0]] = carry;
 }
 
-void Scadere(NrMare x, NrMare y){
+void substract(NrMare x, NrMare y){
    long long borrow = 0;
 
    for (int i = 1; i <= x[0]; i++) {
@@ -98,7 +98,7 @@ void Scadere(NrMare x, NrMare y){
       x[0]--;
 }
 
-void ProdusMic(NrMare x, int n){
+void smallProduct(NrMare x, int n){
    long long carry = 0;
 
    for (int i = 1; i <= x[0]; i++) {
@@ -113,7 +113,7 @@ void ProdusMic(NrMare x, int n){
    }
 }
 
-int Divide(NrMare x, int n){
+int smallDivide(NrMare x, int n){
    long long rest = 0;
 
    for (int i = x[0]; i > 0; i--) {
@@ -128,9 +128,9 @@ int Divide(NrMare x, int n){
    return rest;
 }
 
-void ProdusMare(NrMare x, NrMare y) {
+void bigProduct(NrMare x, NrMare y) {
    NrMare z;
-   AtribMic(z, 0);
+   smallAssign(z, 0);
 
    z[0] = x[0] + y[0];
 
@@ -156,10 +156,10 @@ void ProdusMare(NrMare x, NrMare y) {
    while (z[0] > 1 && z[z[0]] == 0)
       z[0]--;
 
-   AtribMare(x, z);
+   bigAssign(x, z);
 }
 
-void Afis(NrMare A) {
+void print(NrMare A) {
 
    cout << A[A[0]];
 
@@ -168,12 +168,12 @@ void Afis(NrMare A) {
 
 }
 
-void divideMare(NrMare A, NrMare B, NrMare Q, NrMare R) {
+void bigDivide(NrMare A, NrMare B, NrMare Q, NrMare R) {
 
    int i, j;
 
    NrMare cur;
-   AtribMic(cur, 0);
+   smallAssign(cur, 0);
 
    Q[0] = A[0];
 
@@ -205,9 +205,9 @@ void divideMare(NrMare A, NrMare B, NrMare Q, NrMare R) {
       dr = BASE - 1;
       while (st <= dr) {
          mij = st + (dr - st) / 2;
-         AtribMic(aux, mij);
-         ProdusMare(aux, B);
-         if (Compara(aux, cur) <= 0) {
+         smallAssign(aux, mij);
+         bigProduct(aux, B);
+         if (compare(aux, cur) <= 0) {
             digit = mij;
             st = mij + 1;
          } else {
@@ -217,48 +217,48 @@ void divideMare(NrMare A, NrMare B, NrMare Q, NrMare R) {
 
       Q[i] = digit;
 
-      AtribMic(aux, digit);
-      ProdusMare(aux, B);
-      Scadere(cur, aux);
+      smallAssign(aux, digit);
+      bigProduct(aux, B);
+      substract(cur, aux);
 
    }
 
    while (Q[Q[0]] == 0 && Q[0] > 1)
       Q[0]--;
 
-   AtribMare(R, cur);
+   bigAssign(R, cur);
 
 }
 
-void Expo(NrMare a, NrMare n, NrMare MOD) {
+void fastExponentiation(NrMare a, NrMare n, NrMare MOD) {
 
    NrMare aa;
-   AtribMare(aa, a);
-   AtribMic(a, 1);
+   bigAssign(aa, a);
+   smallAssign(a, 1);
    NrMare i, ii;
 
    NrMare unu;
-   AtribMic(unu, 1);
+   smallAssign(unu, 1);
    NrMare doi;
-   AtribMic(doi, 2);
+   smallAssign(doi, 2);
    NrMare Q, R;
 
-   for (AtribMare(i, n); Compara(i, unu) != -1; Divide(i, 2)) {
+   for (bigAssign(i, n); compare(i, unu) != -1; smallDivide(i, 2)) {
 
-      AtribMare(ii, i);
+      bigAssign(ii, i);
 
-      AtribMic(doi, 2);
-      divideMare(ii, doi, Q, R);
+      smallAssign(doi, 2);
+      bigDivide(ii, doi, Q, R);
 
-      if (Compara(R, unu) == 0) {
-         ProdusMare(a, aa);
+      if (compare(R, unu) == 0) {
+         bigProduct(a, aa);
          // a = a % MOD
-         divideMare(a, MOD, Q, R);
-         AtribMare(a, R);
+         bigDivide(a, MOD, Q, R);
+         bigAssign(a, R);
       }
-      ProdusMare(aa, aa);
-      divideMare(aa, MOD, Q, R);
-      AtribMare(aa, R);
+      bigProduct(aa, aa);
+      bigDivide(aa, MOD, Q, R);
+      bigAssign(aa, R);
    }
 
 }
@@ -268,55 +268,55 @@ void euclid(NrMare a, NrMare b, NrMare x, NrMare y, NrMare MOD) {
    NrMare x0, y0, Q, R, aux;
 
    NrMare zero;
-   AtribMic(zero, 0);
+   smallAssign(zero, 0);
 
    for (int k = 0; k < NN; k++) {
       x0[k] = y0[k] = Q[k] = R[k] = aux[k] = 0;
    }
 
-   if (Compara(b, zero) == 0) {
-      AtribMic(x, 1);
-      AtribMic(y, 0);
+   if (compare(b, zero) == 0) {
+      smallAssign(x, 1);
+      smallAssign(y, 0);
    } else {
 
-      divideMare(a, b, Q, R);
+      bigDivide(a, b, Q, R);
       euclid(b, R, x0, y0, MOD);
 
-      AtribMare(x, y0);
+      bigAssign(x, y0);
 
       NrMare temp;
-      AtribMare(temp, Q);
-      ProdusMare(temp, y0);
+      bigAssign(temp, Q);
+      bigProduct(temp, y0);
       NrMare dummy;
-      divideMare(temp, MOD, dummy, R);
-      AtribMare(temp, R);
+      bigDivide(temp, MOD, dummy, R);
+      bigAssign(temp, R);
 
-      if (Compara(x0, temp) > -1) {
-         AtribMare(y, x0);
-         Scadere(y, temp);
+      if (compare(x0, temp) > -1) {
+         bigAssign(y, x0);
+         substract(y, temp);
       } else {
-         AtribMare(y, x0);
-         Adunare(y, MOD);
-         Scadere(y, temp);
+         bigAssign(y, x0);
+         add(y, MOD);
+         substract(y, temp);
       }
 
    }
 
 }
 
-void invers_modular(NrMare A, NrMare MOD, NrMare rez) {
+void modularInverse(NrMare A, NrMare MOD, NrMare rez) {
 
    // A and MOD are coprime
 
    NrMare y;
 
    NrMare zero;
-   AtribMic(zero, 0);
+   smallAssign(zero, 0);
 
    euclid(A, MOD, rez, y, MOD);
 
-   if (Compara(rez, zero) == -1) {
-      Adunare(rez, MOD);
+   if (compare(rez, zero) == -1) {
+      add(rez, MOD);
    }
 
 }

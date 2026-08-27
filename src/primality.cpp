@@ -53,67 +53,67 @@ void randomNumber(NrMare a, NrMare n) {
    NrMare q, r;
 
    NrMare doi;
-   AtribMic(doi, 2);
+   smallAssign(doi, 2);
    NrMare patru;
-   AtribMic(patru, 4);
+   smallAssign(patru, 4);
 
    NrMare n4;
-   AtribMare(n4, n);
-   Scadere(n4, patru);
+   bigAssign(n4, n);
+   substract(n4, patru);
 
    getRandomNrMare(a, 3);
-   divideMare(a, n4, q, r);
-   AtribMare(a, r);
-   Adunare(a, doi);
+   bigDivide(a, n4, q, r);
+   bigAssign(a, r);
+   add(a, doi);
 
 }
 
 bool MillerTest(NrMare d, NrMare n) {
    NrMare dd;
-   AtribMare(dd, d);
+   bigAssign(dd, d);
 
    NrMare a;
    randomNumber(a, n);
 
    NrMare x;
-   AtribMare(x, a);
-   Expo(x, dd, n);
+   bigAssign(x, a);
+   fastExponentiation(x, dd, n);
 
    NrMare unu;
-   AtribMic(unu, 1);
+   smallAssign(unu, 1);
 
    NrMare doi;
-   AtribMic(doi, 2);
+   smallAssign(doi, 2);
 
    NrMare n1;
-   AtribMare(n1, n);
-   Scadere(n1, unu);
+   bigAssign(n1, n);
+   substract(n1, unu);
 
-   if (Compara(x, unu) == 0 ||
-      Compara(x, n1) == 0)
+   if (compare(x, unu) == 0 ||
+      compare(x, n1) == 0)
       return true;
 
-   while (Compara(dd, n1) != 0) {
-      Expo(x, doi, n);
+   while (compare(dd, n1) != 0) {
+      fastExponentiation(x, doi, n);
 
-      ProdusMic(dd, 2);
+      smallProduct(dd, 2);
 
-      if (Compara(x, unu) == 0)
+      if (compare(x, unu) == 0)
          return false;
 
-      if (Compara(x, n1) == 0)
+      if (compare(x, n1) == 0)
          return true;
    }
 
    return false;
 }
 
-bool Par(NrMare n) {
+bool isEven(NrMare n) {
 
    NrMare nn;
-   AtribMare(nn, n);
+   bigAssign(nn, n);
 
-   if (Divide(nn, 2) == 0)
+   if (smallDivide(nn, 2) == 0)
       return true;
    return false;
 
@@ -122,23 +122,23 @@ bool Par(NrMare n) {
 bool isPrime(NrMare n, int k) {
 
    NrMare unu;
-   AtribMic(unu, 1);
+   smallAssign(unu, 1);
    NrMare trei;
-   AtribMic(trei, 3);
+   smallAssign(trei, 3);
    NrMare patru;
-   AtribMic(patru, 4);
+   smallAssign(patru, 4);
 
-   if (Compara(n, unu) < 1 || Compara(n, patru) == 0)
+   if (compare(n, unu) < 1 || compare(n, patru) == 0)
       return false;
-   if (Compara(n, trei) < 1)
+   if (compare(n, trei) < 1)
       return true;
 
    NrMare d;
-   AtribMare(d, n);
-   Scadere(d, unu);
+   bigAssign(d, n);
+   substract(d, unu);
 
-   while (Par(d))
-      Divide(d, 2);
+   while (isEven(d))
+      smallDivide(d, 2);
 
    for (int i = 0; i < k; i++) {
       if (!MillerTest(d, n))
@@ -162,8 +162,8 @@ bool quickCompositeCheck(NrMare n){
         827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937,
         941, 947, 953, 967, 971, 977, 983, 991, 997 };
         for(int p : small_primes){
-            NrMare tmp; AtribMare(tmp, n);
-            if(Divide(tmp, p) == 0) return true;
+            NrMare tmp; bigAssign(tmp, n);
+            if(smallDivide(tmp, p) == 0) return true;
         }
         return false;
 }
