@@ -109,7 +109,7 @@ rsa.exe
 
 This implementation is intended for educational purposes and should not be used for real-world cryptography.
 
-It does not implement modern RSA padding schemes such as OAEP. The message encoding, key generation, and random number generation are simplified for the purposes of the project.
+It does not implement modern RSA padding schemes such as OAEP. The message encoding, key generation, and random number generation are slightly simplified for the purposes of the project.
 
 ## Project Goals
 
