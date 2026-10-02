@@ -10,7 +10,7 @@
 
 using namespace std;
 
-void smallAssign(NrMare x, int n) {
+void smallAssign(BigInt x, int n) {
    for (int i = 0; i < NN; i++)
       x[i] = 0;
 
@@ -25,7 +25,7 @@ void smallAssign(NrMare x, int n) {
    }
 }
 
-void bigAssign(NrMare dest, NrMare src) {
+void bigAssign(BigInt dest, BigInt src) {
    int i;
 
    for (i = 0; i <= src[0]; i++)
@@ -35,7 +35,7 @@ void bigAssign(NrMare dest, NrMare src) {
       dest[i] = src[i] = 0;
 }
 
-int compare(NrMare x, NrMare y) {
+int compare(BigInt x, BigInt y) {
    int nx = x[0];
    int ny = y[0];
 
@@ -63,7 +63,7 @@ int compare(NrMare x, NrMare y) {
    return 1;
 }
 
-void add(NrMare x, NrMare y){
+void add(BigInt x, BigInt y){
    int n = max(x[0], y[0]);
    long long carry = 0;
 
@@ -79,7 +79,7 @@ void add(NrMare x, NrMare y){
       x[++x[0]] = carry;
 }
 
-void substract(NrMare x, NrMare y){
+void substract(BigInt x, BigInt y){
    long long borrow = 0;
 
    for (int i = 1; i <= x[0]; i++) {
@@ -98,7 +98,7 @@ void substract(NrMare x, NrMare y){
       x[0]--;
 }
 
-void smallProduct(NrMare x, int n){
+void smallProduct(BigInt x, int n){
    long long carry = 0;
 
    for (int i = 1; i <= x[0]; i++) {
@@ -113,7 +113,7 @@ void smallProduct(NrMare x, int n){
    }
 }
 
-int smallDivide(NrMare x, int n){
+int smallDivide(BigInt x, int n){
    long long rest = 0;
 
    for (int i = x[0]; i > 0; i--) {
@@ -128,8 +128,8 @@ int smallDivide(NrMare x, int n){
    return rest;
 }
 
-void bigProduct(NrMare x, NrMare y) {
-   NrMare z;
+void bigProduct(BigInt x, BigInt y) {
+   BigInt z;
    smallAssign(z, 0);
 
    z[0] = x[0] + y[0];
@@ -159,7 +159,7 @@ void bigProduct(NrMare x, NrMare y) {
    bigAssign(x, z);
 }
 
-void print(NrMare A) {
+void print(BigInt A) {
 
    cout << A[A[0]];
 
@@ -168,11 +168,11 @@ void print(NrMare A) {
 
 }
 
-void bigDivide(NrMare A, NrMare B, NrMare Q, NrMare R) {
+void bigDivide(BigInt A, BigInt B, BigInt Q, BigInt R) {
 
    int i, j;
 
-   NrMare cur;
+   BigInt cur;
    smallAssign(cur, 0);
 
    Q[0] = A[0];
@@ -200,7 +200,7 @@ void bigDivide(NrMare A, NrMare B, NrMare Q, NrMare R) {
       // find the biggest digit for which digit*B <= cur is true
 
       int st, dr, mij;
-      NrMare aux;
+      BigInt aux;
       st = 0;
       dr = BASE - 1;
       while (st <= dr) {
@@ -230,18 +230,18 @@ void bigDivide(NrMare A, NrMare B, NrMare Q, NrMare R) {
 
 }
 
-void fastExponentiation(NrMare a, NrMare n, NrMare MOD) {
+void fastExponentiation(BigInt a, BigInt n, BigInt MOD) {
 
-   NrMare aa;
+   BigInt aa;
    bigAssign(aa, a);
    smallAssign(a, 1);
-   NrMare i, ii;
+   BigInt i, ii;
 
-   NrMare unu;
+   BigInt unu;
    smallAssign(unu, 1);
-   NrMare doi;
+   BigInt doi;
    smallAssign(doi, 2);
-   NrMare Q, R;
+   BigInt Q, R;
 
    for (bigAssign(i, n); compare(i, unu) != -1; smallDivide(i, 2)) {
 
@@ -263,11 +263,11 @@ void fastExponentiation(NrMare a, NrMare n, NrMare MOD) {
 
 }
 
-void euclid(NrMare a, NrMare b, NrMare x, NrMare y, NrMare MOD) {
+void euclid(BigInt a, BigInt b, BigInt x, BigInt y, BigInt MOD) {
 
-   NrMare x0, y0, Q, R, aux;
+   BigInt x0, y0, Q, R, aux;
 
-   NrMare zero;
+   BigInt zero;
    smallAssign(zero, 0);
 
    for (int k = 0; k < NN; k++) {
@@ -284,10 +284,10 @@ void euclid(NrMare a, NrMare b, NrMare x, NrMare y, NrMare MOD) {
 
       bigAssign(x, y0);
 
-      NrMare temp;
+      BigInt temp;
       bigAssign(temp, Q);
       bigProduct(temp, y0);
-      NrMare dummy;
+      BigInt dummy;
       bigDivide(temp, MOD, dummy, R);
       bigAssign(temp, R);
 
@@ -304,13 +304,13 @@ void euclid(NrMare a, NrMare b, NrMare x, NrMare y, NrMare MOD) {
 
 }
 
-void modularInverse(NrMare A, NrMare MOD, NrMare rez) {
+void modularInverse(BigInt A, BigInt MOD, BigInt rez) {
 
    // A and MOD are coprime
 
-   NrMare y;
+   BigInt y;
 
-   NrMare zero;
+   BigInt zero;
    smallAssign(zero, 0);
 
    euclid(A, MOD, rez, y, MOD);

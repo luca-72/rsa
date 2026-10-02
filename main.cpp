@@ -12,7 +12,7 @@ using namespace std;
 
 int main() {
 
-   NrMare pt, ct;
+   BigInt pt, ct;
    setup();
    string s;
    while (true) {
@@ -20,10 +20,10 @@ int main() {
       cout << "enter the message : ";
       getline(cin, s);
 
-      if (s.size() < 4000)
+      if (s.size() < 100)
          break;
 
-      cout << "the message can't be longer than 400 characters. try again\n";
+      cout << "the message can't be longer than 100 characters. try again\n";
 
    }
 
@@ -51,8 +51,8 @@ int main() {
 
    }
 
-   NrMare vct[1002], vpt[1002];
-   NrMare auxct, auxpt;
+   BigInt vct[1002], vpt[1002];
+   BigInt auxct, auxpt;
    int lgvct = 0, lgvpt = 0;
 
    for (auto ee: vmes) {

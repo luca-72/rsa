@@ -16,7 +16,7 @@ long long getRandomIntNumber() {
 
 }
 
-void getRandomNrMare(NrMare n, int len) {
+void getRandomBigInt(BigInt n, int len) {
 
    n[0] = len;
 
@@ -33,7 +33,7 @@ int randomBaseDigit() {
 
 }
 
-void randomCandidate(NrMare p, int bits) {
+void randomCandidate(BigInt p, int bits) {
 
    int limbs = (bits + 26) / 27;
 
@@ -46,46 +46,46 @@ void randomCandidate(NrMare p, int bits) {
 
 }
 
-void randomNumber(NrMare a, NrMare n) {
+void randomNumber(BigInt a, BigInt n) {
 
    // generates a random number between 2 and n-2; answer stored a
 
-   NrMare q, r;
+   BigInt q, r;
 
-   NrMare doi;
+   BigInt doi;
    smallAssign(doi, 2);
-   NrMare patru;
+   BigInt patru;
    smallAssign(patru, 4);
 
-   NrMare n4;
+   BigInt n4;
    bigAssign(n4, n);
    substract(n4, patru);
 
-   getRandomNrMare(a, 3);
+   getRandomBigInt(a, 3);
    bigDivide(a, n4, q, r);
    bigAssign(a, r);
    add(a, doi);
 
 }
 
-bool MillerTest(NrMare d, NrMare n) {
-   NrMare dd;
+bool MillerTest(BigInt d, BigInt n) {
+   BigInt dd;
    bigAssign(dd, d);
 
-   NrMare a;
+   BigInt a;
    randomNumber(a, n);
 
-   NrMare x;
+   BigInt x;
    bigAssign(x, a);
    fastExponentiation(x, dd, n);
 
-   NrMare unu;
+   BigInt unu;
    smallAssign(unu, 1);
 
-   NrMare doi;
+   BigInt doi;
    smallAssign(doi, 2);
 
-   NrMare n1;
+   BigInt n1;
    bigAssign(n1, n);
    substract(n1, unu);
 
@@ -108,9 +108,9 @@ bool MillerTest(NrMare d, NrMare n) {
    return false;
 }
 
-bool isEven(NrMare n) {
+bool isEven(BigInt n) {
 
-   NrMare nn;
+   BigInt nn;
    bigAssign(nn, n);
 
    if (smallDivide(nn, 2) == 0)
@@ -119,13 +119,13 @@ bool isEven(NrMare n) {
 
 }
 
-bool isPrime(NrMare n, int k) {
+bool isPrime(BigInt n, int k) {
 
-   NrMare unu;
+   BigInt unu;
    smallAssign(unu, 1);
-   NrMare trei;
+   BigInt trei;
    smallAssign(trei, 3);
-   NrMare patru;
+   BigInt patru;
    smallAssign(patru, 4);
 
    if (compare(n, unu) < 1 || compare(n, patru) == 0)
@@ -133,7 +133,7 @@ bool isPrime(NrMare n, int k) {
    if (compare(n, trei) < 1)
       return true;
 
-   NrMare d;
+   BigInt d;
    bigAssign(d, n);
    substract(d, unu);
 
@@ -149,7 +149,7 @@ bool isPrime(NrMare n, int k) {
 
 }
 
-bool quickCompositeCheck(NrMare n){
+bool quickCompositeCheck(BigInt n){
     static const int small_primes[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41,
         43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127,
         131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211,
@@ -162,17 +162,17 @@ bool quickCompositeCheck(NrMare n){
         827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937,
         941, 947, 953, 967, 971, 977, 983, 991, 997 };
         for(int p : small_primes){
-            NrMare tmp; bigAssign(tmp, n);
+            BigInt tmp; bigAssign(tmp, n);
             if(smallDivide(tmp, p) == 0) return true;
         }
         return false;
 }
 
-void randomPrime64(NrMare n){
+void randomPrime64(BigInt n){
 
-    randomCandidate(n, 64);
+    randomCandidate(n, 512);
 
     while(quickCompositeCheck(n) || !isPrime(n, 5)){
-        randomCandidate(n, 64);
+        randomCandidate(n, 512);
     }
 }

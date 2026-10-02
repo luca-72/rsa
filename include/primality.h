@@ -3,13 +3,13 @@
 #include "bigint.h"
 
 long long getRandomIntNumber();
-void getRandomNrMare(NrMare n, int len);
+void getRandomBigInt(BigInt n, int len);
 int randomBaseDigit();
-void randomCandidate(NrMare p, int bits);
-void randomNumber(NrMare a, NrMare n);
-bool MillerTest(NrMare d, NrMare n);
-bool isEven(NrMare n);
-bool isPrime(NrMare n, int k);
-bool quickCompositeCheck(NrMare n);
-void randomPrime64(NrMare n);
+void randomCandidate(BigInt p, int bits);
+void randomNumber(BigInt a, BigInt n);
+bool MillerTest(BigInt d, BigInt n);
+bool isEven(BigInt n);
+bool isPrime(BigInt n, int k);
+bool quickCompositeCheck(BigInt n);
+void randomPrime64(BigInt n);
 

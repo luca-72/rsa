@@ -44,7 +44,7 @@ string stringToString10(string s) {
 
 }
 
-void string10ToBigInt(NrMare rez, string s) {
+void string10ToBigInt(BigInt rez, string s) {
 
    smallAssign(rez, 0);
    rez[0] = 0;
@@ -68,11 +68,11 @@ void string10ToBigInt(NrMare rez, string s) {
 
 }
 
-string BigIntToString10(NrMare a) {
+string BigIntToString10(BigInt a) {
 
    int i, j;
    string rez, aux;
-   NrMare aa;
+   BigInt aa;
 
    bigAssign(aa, a);
 
@@ -121,14 +121,14 @@ string string10ToString(string s) {
 
 }
 
-void read(NrMare message, string s) {
+void read(BigInt message, string s) {
 
    s = stringToString10(s);
    string10ToBigInt(message, s);
 
 }
 
-void write(NrMare a) {
+void write(BigInt a) {
 
    string s;
 
@@ -139,19 +139,19 @@ void write(NrMare a) {
 
 }
 
-NrMare p, N, p1, q1, p2, phi, phi2, d, e;
+BigInt p, N, p1, q1, p2, phi, phi2, d, e;
 
 void setup() {
 
    smallAssign(e, 65537);
 
-   NrMare phi22, e2, q, r, aux;
+   BigInt phi22, e2, q, r, aux;
 
-   NrMare doi;
+   BigInt doi;
    smallAssign(doi, 2);
-   NrMare unu;
+   BigInt unu;
    smallAssign(unu, 1);
-   NrMare zero;
+   BigInt zero;
    smallAssign(zero, 0);
 
    while (true) {
@@ -191,9 +191,9 @@ void setup() {
 
 }
 
-void encrypt(NrMare ct, string s) {
+void encrypt(BigInt ct, string s) {
 
-   NrMare message;
+   BigInt message;
 
    read(message, s);
 
@@ -202,7 +202,7 @@ void encrypt(NrMare ct, string s) {
 
 }
 
-void decrypt(NrMare pt, NrMare ct) {
+void decrypt(BigInt pt, BigInt ct) {
 
    bigAssign(pt, ct);
    fastExponentiation(pt, d, N);

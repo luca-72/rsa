@@ -79,7 +79,7 @@ The project is divided into three main components:
 | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `bigint`    | Arbitrary-precision integer arithmetic using base `10^8`. Includes addition, subtraction, multiplication, division, modulo, modular exponentiation, and the extended Euclidean algorithm. |
 | `primality` | Prime generation using a small-prime sieve and the Miller-Rabin probabilistic primality test.                                                                                             |
-| `rsa`       | RSA key generation, message encoding and decoding, encryption, and decryption.                                                                                                            |
+| `rsa`       | 1024-bit RSA key generation, message encoding and decoding, encryption, and decryption.                                                                                                            |
 
 Messages are converted from ASCII to decimal digits and processed in 4-byte blocks. Each block is encrypted independently.
 
