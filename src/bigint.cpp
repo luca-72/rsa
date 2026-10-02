@@ -217,8 +217,8 @@ void bigDivide(NrMare A, NrMare B, NrMare Q, NrMare R) {
 
       Q[i] = digit;
 
-      smallAssign(aux, digit);
-      bigProduct(aux, B);
+      bigAssign(aux, B);
+      smallProduct(aux, digit);
       substract(cur, aux);
 
    }
